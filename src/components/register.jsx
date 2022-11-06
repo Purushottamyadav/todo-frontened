@@ -1,13 +1,41 @@
 import React from 'react'
 import { useState } from 'react';
+import axios from "axios";
+// import {useNavigate} from "react-router-dom";
 
 const Register = (props) => {
     const [username,setUserName]=useState("");
     const [pass,setPass]=useState("");
+    // const navigate = useNavigate();
 
     const handleSubmit=(e)=>{
         e.preventDefault();
         console.log(username)
+        const formdata = new FormData(e.target)
+        const email = formdata.get("email")
+        const password = formdata.get("password")
+        const confirmpassword = formdata.get("confirmpassword")
+        
+        
+       axios.post('http://localhost:8000/signup',{
+        email:email,
+        password:password,
+        confirmpassword:confirmpassword
+       
+      }).then( res=>res.json(),
+      res=>alert(res.data),
+      alert("saved success fully"),
+      // navigate('/')
+      )
+        .then(
+            (data)=>{console.log(data);
+            }
+        )
+      
+        .catch(err=>{
+            console.log(err)
+        })
+           
     }
   return (
  <>
